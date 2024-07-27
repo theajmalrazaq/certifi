@@ -155,11 +155,13 @@ function endDrawingTouch(event) {
 }
 
 function confirmArea() {
-  if (document.getElementById("imageUpload").value == "" || isDrawing) {
+  if (document.getElementById("imageUpload").value == "") {
     alert("select image first");
     return;
+  } else if (isDrawing) {
+    alert("select Area to Place Names");
+    return;
   }
-
   document.getElementById("st-1").style.display = "none";
   document.getElementById("st-2").style.display = "flex";
   rectX = Math.min(startX, endX);
@@ -204,7 +206,6 @@ function handleCSVUpload(event) {
   reader.onload = function (e) {
     const lines = e.target.result.split("\n");
     selectedNames = lines.map((line) => line.trim());
-    console.log("CSV uploaded and parsed", selectedNames);
     showPreview();
   };
   reader.readAsText(file);
@@ -307,6 +308,10 @@ function stopDragTouch(event) {
 }
 
 function saveImages() {
+  if (selectedNames.length == 0) {
+    alert("upload csv file");
+    return;
+  }
   selectedNames.forEach((name, index) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(uploadedImage, 0, 0);

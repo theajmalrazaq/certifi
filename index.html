@@ -17,9 +17,11 @@
           <div uk-navbar>
             <div class="uk-navbar-center">
               <a class="uk-navbar-item uk-logo" href="#" id="reset">
-                <img src="ertedit.svg" alt="" class="nav_logo" />
+                <img src="assest/ertedit.svg" alt="" class="nav_logo" />
               </a>
-              <a href="" class="uk-flex uk-flex-middle"
+              <a
+                href="https://github.com/theajmalrazaq/certedit"
+                class="uk-flex uk-flex-middle"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -45,10 +47,16 @@
           class="uk-flex uk-flex-column uk-height-large uk-flex-between uk-flex-middle"
         >
           <div>
-            <img src="ertedit.svg" alt="" class="logo" />
+            <img src="assest/ertedit.svg" alt="" class="logo" />
             <h1 class="uk-margin-small-top">
               Generate Certificate with different names at once
             </h1>
+            <p>
+              Designed with 💖 By
+              <a class="uk-link" href="https://github.com/theajmalrazaq"
+                >AjmaL Razaq Bhatti</a
+              >
+            </p>
           </div>
           <button
             class="uk-button uk-button-default btn uk-text-bold uk-text-large"
@@ -58,12 +66,6 @@
           </button>
         </div>
       </div>
-      <footer
-        class="uk-position-relative uk-flex uk-flex-center uk-width-1-1"
-        style="bottom: 65px"
-      >
-        Developed By: Ajmal Razaq Bhatti
-      </footer>
     </div>
 
     <div
@@ -75,12 +77,11 @@
         <div class="uk-container uk-container-xsmall">
           <div class="uk-width-1-2@m uk-card">
             <div class="uk-card-header">
-              <h3 class="uk-card-title">Select Certificate</h3>
+              <h3 class="uk-card-title">Step 1</h3>
               <p
                 class="uk-margin-small-top uk-text-small text-muted-foreground"
               >
-                Upload Certificate on which you want to add names and select
-                Area
+                Upload Certificate on which you want to add names
               </p>
             </div>
 
@@ -98,7 +99,9 @@
               </button>
             </div>
 
-            <div class="uk-flex uk-flex-center uk-padding-small">
+            <div
+              class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-padding"
+            >
               <canvas id="imageCanvas"></canvas>
             </div>
 
@@ -123,7 +126,7 @@
         <div class="uk-container uk-container-xsmall">
           <div class="uk-width-1-2@m uk-card">
             <div class="uk-card-header">
-              <h3 class="uk-card-title">Select Name List</h3>
+              <h3 class="uk-card-title">Step 2</h3>
               <p
                 class="uk-margin-small-top uk-text-small text-muted-foreground"
               >
