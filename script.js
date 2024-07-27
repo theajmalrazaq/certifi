@@ -172,7 +172,6 @@ function confirmArea() {
   document.getElementById("colorPicker").style.display = "block";
   document.getElementById("fontSize").style.display = "block";
   showPreview();
-  document.getElementById("confirmArea").style.display = "none";
 
   canvas.removeEventListener("mousedown", startDrawing);
   canvas.removeEventListener("mousemove", drawRectangle);
