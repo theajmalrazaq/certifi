@@ -73,6 +73,9 @@ function setUpCanvas() {
   canvas.addEventListener("mousedown", startDrawing);
   canvas.addEventListener("mousemove", drawRectangle);
   canvas.addEventListener("mouseup", endDrawing);
+  canvas.addEventListener("touchstart", startDrawingTouch, { passive: false });
+  canvas.addEventListener("touchmove", drawRectangleTouch, { passive: false });
+  canvas.addEventListener("touchend", endDrawingTouch);
 }
 
 function getMousePos(canvas, event) {
@@ -83,9 +86,26 @@ function getMousePos(canvas, event) {
   };
 }
 
+function getTouchPos(canvas, event) {
+  const rect = canvas.getBoundingClientRect();
+  const touch = event.touches[0];
+  return {
+    x: (touch.clientX - rect.left) * (canvas.width / rect.width),
+    y: (touch.clientY - rect.top) * (canvas.height / rect.height),
+  };
+}
+
 function startDrawing(event) {
   canvas.style.cursor = "cell";
   const pos = getMousePos(canvas, event);
+  startX = pos.x;
+  startY = pos.y;
+  isDrawing = true;
+}
+
+function startDrawingTouch(event) {
+  event.preventDefault();
+  const pos = getTouchPos(canvas, event);
   startX = pos.x;
   startY = pos.y;
   isDrawing = true;
@@ -105,6 +125,21 @@ function drawRectangle(event) {
   ctx.strokeRect(startX, startY, endX - startX, endY - startY);
 }
 
+function drawRectangleTouch(event) {
+  if (!isDrawing) return;
+  event.preventDefault();
+
+  const pos = getTouchPos(canvas, event);
+  endX = pos.x;
+  endY = pos.y;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(uploadedImage, 0, 0);
+
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(startX, startY, endX - startX, endY - startY);
+}
+
 function endDrawing(event) {
   if (!isDrawing) return;
   isDrawing = false;
@@ -112,6 +147,11 @@ function endDrawing(event) {
   const pos = getMousePos(canvas, event);
   endX = pos.x;
   endY = pos.y;
+}
+
+function endDrawingTouch(event) {
+  if (!isDrawing) return;
+  isDrawing = false;
 }
 
 function confirmArea() {
@@ -137,6 +177,9 @@ function confirmArea() {
   canvas.removeEventListener("mousedown", startDrawing);
   canvas.removeEventListener("mousemove", drawRectangle);
   canvas.removeEventListener("mouseup", endDrawing);
+  canvas.removeEventListener("touchstart", startDrawingTouch);
+  canvas.removeEventListener("touchmove", drawRectangleTouch);
+  canvas.removeEventListener("touchend", endDrawingTouch);
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(uploadedImage, 0, 0);
@@ -208,6 +251,13 @@ function showPreview() {
   previewCanvas.addEventListener("mousedown", startDrag);
   previewCanvas.addEventListener("mousemove", dragText);
   previewCanvas.addEventListener("mouseup", stopDrag);
+  previewCanvas.addEventListener("touchstart", startDragTouch, {
+    passive: false,
+  });
+  previewCanvas.addEventListener("touchmove", dragTextTouch, {
+    passive: false,
+  });
+  previewCanvas.addEventListener("touchend", stopDragTouch);
 }
 
 function startDrag(event) {
@@ -215,6 +265,15 @@ function startDrag(event) {
   const rect = previewCanvas.getBoundingClientRect();
   textX = (event.clientX - rect.left) * (previewCanvas.width / rect.width);
   textY = (event.clientY - rect.top) * (previewCanvas.height / rect.height);
+  isDragging = true;
+}
+
+function startDragTouch(event) {
+  event.preventDefault();
+  const rect = previewCanvas.getBoundingClientRect();
+  const touch = event.touches[0];
+  textX = (touch.clientX - rect.left) * (previewCanvas.width / rect.width);
+  textY = (touch.clientY - rect.top) * (previewCanvas.height / rect.height);
   isDragging = true;
 }
 
@@ -228,7 +287,23 @@ function dragText(event) {
   showPreview();
 }
 
+function dragTextTouch(event) {
+  if (!isDragging) return;
+  event.preventDefault();
+
+  const rect = previewCanvas.getBoundingClientRect();
+  const touch = event.touches[0];
+  textX = (touch.clientX - rect.left) * (previewCanvas.width / rect.width);
+  textY = (touch.clientY - rect.top) * (previewCanvas.height / rect.height);
+
+  showPreview();
+}
+
 function stopDrag(event) {
+  isDragging = false;
+}
+
+function stopDragTouch(event) {
   isDragging = false;
 }
 
