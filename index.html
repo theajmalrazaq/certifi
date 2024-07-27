@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/franken-wc@0.0.4/dist/css/neutral.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="uk-position-fixed uk-width-1-1" style="z-index: 999">
+      <nav class="uk-navbar-container uk-width-1-1">
+        <div class="uk-container">
+          <div uk-navbar>
+            <div class="uk-navbar-center">
+              <a class="uk-navbar-item uk-logo" href="#" id="reset">
+                <img src="ertedit.svg" alt="" class="nav_logo" />
+              </a>
+              <a href="" class="uk-flex uk-flex-middle"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="white"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"
+                  ></path></svg
+                ><span class="uk-margin-small-left">Star On Github</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div id="home" class="uk-height-1-1">
+      <div
+        class="uk-container uk-height-1-1 uk-flex uk-flex-around uk-flex-middle uk-flex-wrap-reverse"
+      >
+        <div
+          class="uk-flex uk-flex-column uk-height-large uk-flex-between uk-flex-middle"
+        >
+          <div>
+            <img src="ertedit.svg" alt="" class="logo" />
+            <h1 class="uk-margin-small-top">
+              Generate Certificate with different names at once
+            </h1>
+          </div>
+          <button
+            class="uk-button uk-button-default btn uk-text-bold uk-text-large"
+            id="generate"
+          >
+            Generate
+          </button>
+        </div>
+      </div>
+      <footer
+        class="uk-position-relative uk-flex uk-flex-center uk-width-1-1"
+        style="bottom: 35px"
+      >
+        Developed By: Ajmal Razaq Bhatti
+      </footer>
+    </div>
+
+    <div
+      id="st-1"
+      class="uk-flex-center uk-flex-middle uk-padding"
+      style="display: none"
+    >
+      <div class="uk-section">
+        <div class="uk-container uk-container-xsmall">
+          <div class="uk-width-1-2@m uk-card">
+            <div class="uk-card-header">
+              <h3 class="uk-card-title">Select Certificate</h3>
+              <p
+                class="uk-margin-small-top uk-text-small text-muted-foreground"
+              >
+                Upload Certificate on which you want to add names and select
+                Area
+              </p>
+            </div>
+
+            <div
+              class="js-upload uk-form-custom uk-padding-small"
+              uk-form-custom=""
+            >
+              <input type="file" accept="image/*" id="imageUpload" />
+              <button
+                class="uk-button uk-button-default"
+                type="button"
+                tabindex="-1"
+              >
+                Select Certificate Image
+              </button>
+            </div>
+
+            <div
+              class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-margin-medium uk-margin-medium-left uk-margin-medium-right"
+            >
+              <canvas id="imageCanvas"></canvas>
+            </div>
+
+            <div class="uk-card-footer uk-flex uk-flex-between">
+              <button class="uk-button uk-button-default" id="bck1">
+                Back
+              </button>
+              <button class="uk-button uk-button-default" id="confirmArea">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="st-2"
+      class="uk-flex-center uk-flex-middle uk-padding"
+      style="display: none"
+    >
+      <div class="uk-section">
+        <div class="uk-container uk-container-xsmall">
+          <div class="uk-width-1-2@m uk-card">
+            <div class="uk-card-header">
+              <h3 class="uk-card-title">Select Name List</h3>
+              <p
+                class="uk-margin-small-top uk-text-small text-muted-foreground"
+              >
+                Select Name list txt/csv for which you want to generate
+                certificates
+              </p>
+            </div>
+            <div
+              class="input_wrapper uk-flex uk-flex-column uk-padding-small uk-flex-between"
+            >
+              <div class="js-upload uk-form-custom" uk-form-custom="">
+                <input type="file" accept=".csv,.txt" id="csvUpload" />
+                <button
+                  class="uk-button uk-button-default"
+                  type="button"
+                  tabindex="-1"
+                >
+                  Select Name List
+                </button>
+              </div>
+              <!-- Font Upload -->
+              <div
+                class="js-upload uk-form-custom uk-margin-small-top"
+                uk-form-custom=""
+              >
+                <input type="file" accept=".ttf,.otf" id="fontUpload" />
+                <button
+                  class="uk-button uk-button-default"
+                  type="button"
+                  tabindex="-1"
+                >
+                  Select Custom Font
+                </button>
+              </div>
+            </div>
+            <div
+              class="js-upload uk-form-custom uk-padding-small"
+              uk-form-custom=""
+            >
+              <input type="color" id="colorPicker" style="display: none" />
+              <input
+                type="range"
+                id="fontSize"
+                min="10"
+                max="100"
+                value="20"
+                style="display: none"
+                class="uk-margin"
+              />
+            </div>
+
+            <div
+              class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-margin-medium uk-margin-medium-left uk-margin-medium-right"
+            >
+              <canvas id="previewCanvas"></canvas>
+            </div>
+
+            <div class="uk-card-footer uk-flex uk-flex-between">
+              <button class="uk-button uk-button-default" id="bck2">
+                Back
+              </button>
+              <button class="uk-button uk-button-default" id="saveImages">
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
