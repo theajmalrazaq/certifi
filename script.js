@@ -120,14 +120,14 @@ function handleCSVUpload(event) {
 function handleFontUpload(event) {
   const file = event.target.files[0];
   const reader = new FileReader();
-  reader.onload((e) => {
+  reader.onload = (e) => {
     const font = new FontFace("customFont", e.target.result);
     font.load().then((loadedFont) => {
       document.fonts.add(loadedFont);
       customFont = "customFont";
       showPreview();
     });
-  });
+  };
   reader.readAsArrayBuffer(file);
 }
 
