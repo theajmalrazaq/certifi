@@ -19,7 +19,7 @@ document.getElementById("bck1").addEventListener("click", () => {
   document.getElementById("st-1").style.display = "none";
 });
 document.getElementById("bck2").addEventListener("click", () => {
-  document.getElementById("st-1").style.display = "";
+  document.getElementById("st-1").style.display = "flex";
   document.getElementById("st-2").style.display = "none";
 });
 document.getElementById("reset").addEventListener("click", () => {
@@ -33,17 +33,15 @@ let selectedNames = ["Demo Name"];
 let canvas, ctx, previewCanvas, previewCtx;
 let startX, startY, endX, endY;
 let isDrawing = true;
-let rectX, rectY, rectWidth, rectHeight;
 let customFont = null;
 let customColor = "#ff0000";
-let fontSize = 20;
+let fontSize = 30;
 let isDragging = false;
 let textX, textY;
-
+let rectX, rectY;
 function handleImageUpload(event) {
   const file = event.target.files[0];
   const reader = new FileReader();
-
   reader.onload = function (e) {
     uploadedImage = new Image();
     uploadedImage.onload = function () {
@@ -57,6 +55,8 @@ function handleImageUpload(event) {
 function setUpCanvas() {
   canvas = document.getElementById("imageCanvas");
   canvas.width = uploadedImage.width;
+  rectX = uploadedImage.width / 2;
+  rectY = uploadedImage.height / 2;
   canvas.style.width = "100%";
   canvas.height = uploadedImage.height;
   canvas.style.height = "100%";
@@ -69,118 +69,24 @@ function setUpCanvas() {
   previewCanvas.height = uploadedImage.height;
   previewCanvas.style.height = "100%";
   previewCtx = previewCanvas.getContext("2d");
-
-  canvas.addEventListener("mousedown", startDrawing);
-  canvas.addEventListener("mousemove", drawRectangle);
-  canvas.addEventListener("mouseup", endDrawing);
-  canvas.addEventListener("touchstart", startDrawingTouch, { passive: false });
-  canvas.addEventListener("touchmove", drawRectangleTouch, { passive: false });
-  canvas.addEventListener("touchend", endDrawingTouch);
-}
-
-function getMousePos(canvas, event) {
-  const rect = canvas.getBoundingClientRect();
-  return {
-    x: (event.clientX - rect.left) * (canvas.width / rect.width),
-    y: (event.clientY - rect.top) * (canvas.height / rect.height),
-  };
-}
-
-function getTouchPos(canvas, event) {
-  const rect = canvas.getBoundingClientRect();
-  const touch = event.touches[0];
-  return {
-    x: (touch.clientX - rect.left) * (canvas.width / rect.width),
-    y: (touch.clientY - rect.top) * (canvas.height / rect.height),
-  };
-}
-
-function startDrawing(event) {
-  canvas.style.cursor = "cell";
-  const pos = getMousePos(canvas, event);
-  startX = pos.x;
-  startY = pos.y;
-  isDrawing = true;
-}
-
-function startDrawingTouch(event) {
-  event.preventDefault();
-  const pos = getTouchPos(canvas, event);
-  startX = pos.x;
-  startY = pos.y;
-  isDrawing = true;
-}
-
-function drawRectangle(event) {
-  if (!isDrawing) return;
-
-  const pos = getMousePos(canvas, event);
-  endX = pos.x;
-  endY = pos.y;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(uploadedImage, 0, 0);
-
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(startX, startY, endX - startX, endY - startY);
-}
-
-function drawRectangleTouch(event) {
-  if (!isDrawing) return;
-  event.preventDefault();
-
-  const pos = getTouchPos(canvas, event);
-  endX = pos.x;
-  endY = pos.y;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(uploadedImage, 0, 0);
-
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(startX, startY, endX - startX, endY - startY);
-}
-
-function endDrawing(event) {
-  if (!isDrawing) return;
-  isDrawing = false;
-
-  const pos = getMousePos(canvas, event);
-  endX = pos.x;
-  endY = pos.y;
-}
-
-function endDrawingTouch(event) {
-  if (!isDrawing) return;
-  isDrawing = false;
 }
 
 function confirmArea() {
   if (document.getElementById("imageUpload").value == "") {
-    alert("select image first");
-    return;
-  } else if (isDrawing) {
-    alert("select Area to Place Names");
+    UIkit.notification({
+      message: "Upload Certificate First",
+      status: "danger",
+    });
     return;
   }
   document.getElementById("st-1").style.display = "none";
   document.getElementById("st-2").style.display = "flex";
-  rectX = Math.min(startX, endX);
-  rectY = Math.min(startY, endY);
-  rectWidth = Math.abs(endX - startX);
-  rectHeight = Math.abs(endY - startY);
 
   document.getElementById("csvUpload").style.display = "block";
   document.getElementById("fontUpload").style.display = "block";
   document.getElementById("colorPicker").style.display = "block";
   document.getElementById("fontSize").style.display = "block";
   showPreview();
-
-  canvas.removeEventListener("mousedown", startDrawing);
-  canvas.removeEventListener("mousemove", drawRectangle);
-  canvas.removeEventListener("mouseup", endDrawing);
-  canvas.removeEventListener("touchstart", startDrawingTouch);
-  canvas.removeEventListener("touchmove", drawRectangleTouch);
-  canvas.removeEventListener("touchend", endDrawingTouch);
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(uploadedImage, 0, 0);
@@ -214,15 +120,14 @@ function handleCSVUpload(event) {
 function handleFontUpload(event) {
   const file = event.target.files[0];
   const reader = new FileReader();
-  reader.onload = function (e) {
+  reader.onload((e) => {
     const font = new FontFace("customFont", e.target.result);
-    font.load().then(function (loadedFont) {
+    font.load().then((loadedFont) => {
       document.fonts.add(loadedFont);
       customFont = "customFont";
-
       showPreview();
     });
-  };
+  });
   reader.readAsArrayBuffer(file);
 }
 
@@ -237,8 +142,8 @@ function handleFontSizeChange(event) {
 }
 
 function showPreview() {
-  previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height); // Clear canvas
-  previewCtx.drawImage(uploadedImage, 0, 0); // Redraw image
+  previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+  previewCtx.drawImage(uploadedImage, 0, 0);
 
   previewCtx.font = `${fontSize}px ${customFont || "Arial"}`;
   previewCtx.fillStyle = customColor;
@@ -308,7 +213,7 @@ function stopDragTouch(event) {
 }
 
 function saveImages() {
-  if (selectedNames.length == 0) {
+  if (document.getElementById("csvUpload").value == "") {
     alert("upload csv file");
     return;
   }

@@ -12,28 +12,29 @@
   </head>
   <body>
     <div class="uk-position-fixed uk-width-1-1" style="z-index: 999">
-      <nav class="uk-navbar-container uk-width-1-1">
+      <nav class="uk-navbar-container">
         <div class="uk-container">
           <div uk-navbar>
-            <div class="uk-navbar-center">
-              <a class="uk-navbar-item uk-logo" href="#" id="reset">
-                <img src="assest/ertedit.svg" alt="" class="nav_logo" />
-              </a>
+            <div class="uk-navbar-left">
               <a
-                href="https://github.com/theajmalrazaq/certedit"
-                class="uk-flex uk-flex-middle"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="white"
-                  viewBox="0 0 256 256"
-                >
-                  <path
-                    d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"
-                  ></path></svg
-                ><span class="uk-margin-small-left">Star On Github</span></a
-              >
+                class="uk-navbar-item uk-logo"
+                href="#"
+                id="reset"
+                aria-label="Back to Home"
+                ><img src="assest/ertedit.svg" alt="" class="nav_logo"
+              /></a>
+
+              <ul class="uk-navbar-nav">
+                <li>
+                  <a href="#" class="uk-flex uk-flex-middle">
+                    <span
+                      class="uk-icon uk-margin-small-right"
+                      uk-icon="icon: star"
+                    ></span>
+                    <span style="margin-top: 5px"> Star on Github</span>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -70,12 +71,17 @@
 
     <div
       id="st-1"
-      class="uk-flex-center uk-flex-middle uk-padding"
+      class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1"
       style="display: none"
     >
+      <div
+        class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-remove-padding"
+      >
+        <canvas id="imageCanvas"></canvas>
+      </div>
       <div class="uk-section">
         <div class="uk-container uk-container-xsmall">
-          <div class="uk-width-1-2@m uk-card">
+          <div class="uk-card uk-card-default">
             <div class="uk-card-header">
               <h3 class="uk-card-title">Step 1</h3>
               <p
@@ -99,12 +105,6 @@
               </button>
             </div>
 
-            <div
-              class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-padding"
-            >
-              <canvas id="imageCanvas"></canvas>
-            </div>
-
             <div class="uk-card-footer uk-flex uk-flex-between">
               <button class="uk-button uk-button-default" id="bck1">
                 Back
@@ -119,83 +119,76 @@
     </div>
     <div
       id="st-2"
-      class="uk-flex-center uk-flex-middle uk-padding"
+      class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1"
       style="display: none"
     >
+      <div class="uk-container uk-container-xsmall uk-flex uk-flex-center">
+        <canvas id="previewCanvas"></canvas>
+      </div>
       <div class="uk-section">
-        <div class="uk-container uk-container-xsmall">
-          <div class="uk-width-1-2@m uk-card">
-            <div class="uk-card-header">
-              <h3 class="uk-card-title">Step 2</h3>
-              <p
-                class="uk-margin-small-top uk-text-small text-muted-foreground"
+        <div class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <h3 class="uk-card-title">Step 2</h3>
+            <p class="uk-margin-small-top uk-text-small text-muted-foreground">
+              Select Name list txt/csv for which you want to generate
+              certificates
+            </p>
+          </div>
+          <div
+            class="input_wrapper uk-flex uk-flex-column uk-padding-small uk-flex-between"
+          >
+            <div class="js-upload uk-form-custom" uk-form-custom="">
+              <input type="file" accept=".csv,.txt" id="csvUpload" />
+              <button
+                class="uk-button uk-button-default"
+                type="button"
+                tabindex="-1"
               >
-                Select Name list txt/csv for which you want to generate
-                certificates
-              </p>
+                Select Name List
+              </button>
             </div>
+            <!-- Font Upload -->
             <div
-              class="input_wrapper uk-flex uk-flex-column uk-padding-small uk-flex-between"
-            >
-              <div class="js-upload uk-form-custom" uk-form-custom="">
-                <input type="file" accept=".csv,.txt" id="csvUpload" />
-                <button
-                  class="uk-button uk-button-default"
-                  type="button"
-                  tabindex="-1"
-                >
-                  Select Name List
-                </button>
-              </div>
-              <!-- Font Upload -->
-              <div
-                class="js-upload uk-form-custom uk-margin-small-top"
-                uk-form-custom=""
-              >
-                <input type="file" accept=".ttf,.otf" id="fontUpload" />
-                <button
-                  class="uk-button uk-button-default"
-                  type="button"
-                  tabindex="-1"
-                >
-                  Select Custom Font
-                </button>
-              </div>
-            </div>
-            <div
-              class="js-upload uk-form-custom uk-padding-small"
+              class="js-upload uk-form-custom uk-margin-small-top"
               uk-form-custom=""
             >
-              <input type="color" id="colorPicker" style="display: none" />
-              <input
-                type="range"
-                id="fontSize"
-                min="10"
-                max="100"
-                value="20"
-                style="display: none"
-                class="uk-margin"
-              />
-            </div>
-
-            <div
-              class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-padding"
-            >
-              <canvas id="previewCanvas"></canvas>
-            </div>
-
-            <div class="uk-card-footer uk-flex uk-flex-between">
-              <button class="uk-button uk-button-default" id="bck2">
-                Back
-              </button>
-              <button class="uk-button uk-button-default" id="saveImages">
-                Download
+              <input type="file" accept=".ttf,.otf" id="fontUpload" />
+              <button
+                class="uk-button uk-button-default"
+                type="button"
+                tabindex="-1"
+              >
+                Select Custom Font
               </button>
             </div>
+          </div>
+          <div
+            class="js-upload uk-form-custom uk-padding-small"
+            uk-form-custom=""
+          >
+            <input type="color" id="colorPicker" style="display: none" />
+            <input
+              type="range"
+              id="fontSize"
+              min="10"
+              max="100"
+              value="20"
+              style="display: none"
+              class="uk-margin"
+            />
+          </div>
+
+          <div class="uk-card-footer uk-flex uk-flex-between">
+            <button class="uk-button uk-button-default" id="bck2">Back</button>
+            <button class="uk-button uk-button-default" id="saveImages">
+              Download
+            </button>
           </div>
         </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit-icons.min.js"></script>
 
     <script src="script.js"></script>
   </body>
