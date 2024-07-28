@@ -214,7 +214,10 @@ function stopDragTouch(event) {
 
 function saveImages() {
   if (document.getElementById("csvUpload").value == "") {
-    alert("upload csv file");
+    UIkit.notification({
+      message: "Upload Name list CSV/TXT",
+      status: "danger",
+    });
     return;
   }
   selectedNames.forEach((name, index) => {
