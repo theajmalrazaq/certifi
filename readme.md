@@ -1,4 +1,4 @@
-<img src="https://github.com/theajmalrazaq/certedit/raw/master/assest/ertedit.svg"/>
+<img src="https://github.com/theajmalrazaq/certedit/raw/master/assest/ertedit.svg" width="200px"/>
 # CertEdit
 
 Welcome to CertEdit, the only certificate generator you'll ever need because, let's face it, who has time to handwrite names on certificates? Not you, that's for sure. CertEdit is a gloriously simple web app built with good old vanilla JavaScript and HTML, because why make things easy when you can do it the hard way?
