@@ -28,8 +28,6 @@ document.getElementById("reset").addEventListener("click", () => {
   document.getElementById("st-2").style.display = "none";
 });
 
-document.getElementById("printButton").addEventListener("click", printCertificates);
-
 let uploadedImage;
 let selectedNames = ["Demo Name"];
 let canvas, ctx, previewCanvas, previewCtx;
@@ -236,25 +234,6 @@ function saveImages() {
     link.href = canvas.toDataURL();
     link.click();
   });
-  addPDFExportFeature();
-}
-
-function addPDFExportFeature() {
-  const downloadButton = document.getElementById('saveImages');
-  if (downloadButton) {
-      const pdfButton = document.createElement('button');
-      pdfButton.textContent = 'Export as PDF';
-      pdfButton.className = 'uk-button uk-button-secondary uk-margin-small-left';
-      pdfButton.addEventListener('click', exportAsPDF);
-
-      const printButton = document.createElement('button');
-      printButton.textContent = 'Print';
-      printButton.className = 'uk-button uk-button-secondary uk-margin-small-left';
-      printButton.addEventListener('click', printCertificates);
-
-      downloadButton.parentNode.insertBefore(printButton, downloadButton.nextSibling);
-      downloadButton.parentNode.insertBefore(pdfButton, printButton);
-  }
 }
 
 function exportAsPDF() {
@@ -357,23 +336,20 @@ function printCertificates() {
     };
 }
 
-// Event listener for the print button
+// Event listeners
 document.addEventListener('DOMContentLoaded', function() {
+    const exportPDFButton = document.getElementById('exportPDF');
     const printButton = document.getElementById('printButton');
+
+    if (exportPDFButton) {
+        exportPDFButton.addEventListener('click', exportAsPDF);
+    } else {
+        console.error('Export PDF button not found in the DOM');
+    }
+
     if (printButton) {
-        console.log('Print button found, adding event listener');
         printButton.addEventListener('click', printCertificates);
     } else {
         console.error('Print button not found in the DOM');
     }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  const downloadButton = document.querySelector('button.uk-button-primary');
-  if (downloadButton) {
-      downloadButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          exportAsPDF();
-      });
-  }
 });
