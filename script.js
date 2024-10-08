@@ -235,7 +235,6 @@ function saveImages() {
     link.click();
   });
 }
-
 function exportAsPDF() {
   if (typeof jspdf === 'undefined') {
       console.error('jsPDF library not loaded');
@@ -353,3 +352,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Print button not found in the DOM');
     }
 });
+
