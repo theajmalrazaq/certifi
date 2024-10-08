@@ -234,3 +234,35 @@ function saveImages() {
     link.click();
   });
 }
+
+document.getElementById("exportPDF").addEventListener("click", exportAsPDF);
+
+async function exportAsPDF() {
+  if (document.getElementById("csvUpload").value == "") {
+    UIkit.notification({
+      message: "Upload Name list CSV/TXT",
+      status: "danger",
+    });
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF();
+
+  selectedNames.forEach((name, index) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(uploadedImage, 0, 0);
+
+    ctx.font = `${fontSize}px ${customFont || "Arial"}`;
+    ctx.fillStyle = customColor;
+    ctx.fillText(name, textX || rectX + 10, textY || rectY + 30);
+
+    if (index > 0) {
+      pdf.addPage();
+    }
+    const imgData = canvas.toDataURL("image/png");
+    pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+  });
+
+  pdf.save("certificates.pdf");
+}
