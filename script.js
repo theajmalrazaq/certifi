@@ -39,6 +39,7 @@ let fontSize = 30;
 let isDragging = false;
 let textX, textY;
 let rectX, rectY;
+let textAlign = 'left'; // Default text alignment
 function handleImageUpload(event) {
   const file = event.target.files[0];
   const reader = new FileReader();
@@ -199,7 +200,7 @@ function dragTextTouch(event) {
   const rect = previewCanvas.getBoundingClientRect();
   const touch = event.touches[0];
   textX = (touch.clientX - rect.left) * (previewCanvas.width / rect.width);
-  textY = (touch.clientY - rect.top) * (previewCanvas.height / rect.height);
+  textY = (event.clientY - rect.top) * (previewCanvas.height / rect.height);
 
   showPreview();
 }
@@ -234,35 +235,121 @@ function saveImages() {
     link.click();
   });
 }
-
-document.getElementById("exportPDF").addEventListener("click", exportAsPDF);
-
-async function exportAsPDF() {
-  if (document.getElementById("csvUpload").value == "") {
-    UIkit.notification({
-      message: "Upload Name list CSV/TXT",
-      status: "danger",
-    });
-    return;
+function exportAsPDF() {
+  if (typeof jspdf === 'undefined') {
+      console.error('jsPDF library not loaded');
+      return;
   }
 
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF();
+  if (selectedNames.length === 0) {
+      UIkit.notification({
+          message: 'Please upload a name list first',
+          status: 'danger'
+      });
+      return;
+  }
+
+  const { jsPDF } = jspdf;
+  const pdf = new jsPDF('l', 'px', [canvas.width, canvas.height]);
 
   selectedNames.forEach((name, index) => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(uploadedImage, 0, 0);
+      if (index > 0) pdf.addPage();
 
-    ctx.font = `${fontSize}px ${customFont || "Arial"}`;
-    ctx.fillStyle = customColor;
-    ctx.fillText(name, textX || rectX + 10, textY || rectY + 30);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(uploadedImage, 0, 0);
 
-    if (index > 0) {
-      pdf.addPage();
-    }
-    const imgData = canvas.toDataURL("image/png");
-    pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+      ctx.font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
+      ctx.fillStyle = customColor;
+      ctx.textAlign = textAlign;
+
+      let x = textX;
+      if (textAlign === 'center') {
+          x = canvas.width / 2;
+      } else if (textAlign === 'right') {
+          x = canvas.width - textX;
+      }
+
+      ctx.fillText(name, x, textY);
+
+      const imgData = canvas.toDataURL('image/png');
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
   });
 
-  pdf.save("certificates.pdf");
+  pdf.save('certificates.pdf');
 }
+
+function printCertificates() {
+    console.log('printCertificates function called');
+
+    if (selectedNames.length === 0) {
+        console.log('No names selected');
+        UIkit.notification({
+            message: 'Please upload a name list first',
+            status: 'danger'
+        });
+        return;
+    }
+
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write('<html><head><title>Print Certificates</title>');
+    printWindow.document.write('<style>@media print { @page { size: landscape; } body { margin: 0; } img { max-width: 100%; height: auto; page-break-after: always; } }</style>');
+    printWindow.document.write('</head><body>');
+
+    selectedNames.forEach((name, index) => {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+
+        tempCtx.drawImage(uploadedImage, 0, 0, tempCanvas.width, tempCanvas.height);
+
+        tempCtx.font = `${fontSize}px ${customFont || "Arial"}`;
+        tempCtx.fillStyle = customColor;
+        const currentTextAlign = textAlign || 'left';
+        tempCtx.textAlign = currentTextAlign;
+
+        let x = textX || tempCanvas.width / 2;
+        if (currentTextAlign === 'center') {
+            x = tempCanvas.width / 2;
+        } else if (currentTextAlign === 'right') {
+            x = tempCanvas.width - (textX || 0);
+        }
+
+        tempCtx.fillText(name, x, textY || tempCanvas.height / 2);
+
+        const imgData = tempCanvas.toDataURL('image/png');
+        printWindow.document.write(`<img src="${imgData}" style="width: 100%; page-break-after: always;">`);
+    });
+
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+
+    printWindow.onload = function() {
+        printWindow.focus();
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.onafterprint = function() {
+                printWindow.close();
+            };
+        }, 250);
+    };
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const exportPDFButton = document.getElementById('exportPDF');
+    const printButton = document.getElementById('printButton');
+
+    if (exportPDFButton) {
+        exportPDFButton.addEventListener('click', exportAsPDF);
+    } else {
+        console.error('Export PDF button not found in the DOM');
+    }
+
+    if (printButton) {
+        printButton.addEventListener('click', printCertificates);
+    } else {
+        console.error('Print button not found in the DOM');
+    }
+});
+
