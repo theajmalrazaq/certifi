@@ -1,10 +1,13 @@
 document
   .getElementById("imageUpload")
   .addEventListener("change", handleImageUpload);
+
 document.getElementById("confirmArea").addEventListener("click", confirmArea);
+
 document
   .getElementById("csvUpload")
   .addEventListener("change", handleCSVUpload);
+
 document
   .getElementById("fontUpload")
   .addEventListener("change", handleFontUpload);
@@ -237,119 +240,122 @@ function saveImages() {
 }
 function exportAsPDF() {
   if (typeof jspdf === 'undefined') {
-      console.error('jsPDF library not loaded');
-      return;
+    console.error('jsPDF library not loaded');
+    return;
   }
 
   if (selectedNames.length === 0) {
-      UIkit.notification({
-          message: 'Please upload a name list first',
-          status: 'danger'
-      });
-      return;
+    UIkit.notification({
+      message: 'Please upload a name list first',
+      status: 'danger'
+    });
+    return;
   }
 
   const { jsPDF } = jspdf;
   const pdf = new jsPDF('l', 'px', [canvas.width, canvas.height]);
 
   selectedNames.forEach((name, index) => {
-      if (index > 0) pdf.addPage();
+    if (index > 0) pdf.addPage();
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(uploadedImage, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(uploadedImage, 0, 0);
 
-      ctx.font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
-      ctx.fillStyle = customColor;
-      ctx.textAlign = textAlign;
+    ctx.font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
+    ctx.fillStyle = customColor;
+    ctx.textAlign = textAlign;
 
-      let x = textX;
-      if (textAlign === 'center') {
-          x = canvas.width / 2;
-      } else if (textAlign === 'right') {
-          x = canvas.width - textX;
-      }
+    let x = textX;
+    if (textAlign === 'center') {
+      x = canvas.width / 2;
+    } else if (textAlign === 'right') {
+      x = canvas.width - textX;
+    }
 
-      ctx.fillText(name, x, textY);
+    ctx.fillText(name, x, textY);
 
-      const imgData = canvas.toDataURL('image/png');
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+    const imgData = canvas.toDataURL('image/png');
+    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
   });
 
   pdf.save('certificates.pdf');
 }
 
 function printCertificates() {
-    console.log('printCertificates function called');
+  console.log('printCertificates function called');
 
-    if (selectedNames.length === 0) {
-        console.log('No names selected');
-        UIkit.notification({
-            message: 'Please upload a name list first',
-            status: 'danger'
-        });
-        return;
+  if (selectedNames.length === 0) {
+    console.log('No names selected');
+    UIkit.notification({
+      message: 'Please upload a name list first',
+      status: 'danger'
+    });
+    return;
+  }
+
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write('<html><head><title>Print Certificates</title>');
+  printWindow.document.write('<style>@media print { @page { size: landscape; } body { margin: 0; } img { max-width: 100%; height: auto; page-break-after: always; } }</style>');
+  printWindow.document.write('</head><body>');
+
+  selectedNames.forEach((name, index) => {
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+
+    tempCtx.drawImage(uploadedImage, 0, 0, tempCanvas.width, tempCanvas.height);
+
+    tempCtx.font = `${fontSize}px ${customFont || "Arial"}`;
+    tempCtx.fillStyle = customColor;
+    const currentTextAlign = textAlign || 'left';
+    tempCtx.textAlign = currentTextAlign;
+
+    let x = textX || tempCanvas.width / 2;
+    if (currentTextAlign === 'center') {
+      x = tempCanvas.width / 2;
+    } else if (currentTextAlign === 'right') {
+      x = tempCanvas.width - (textX || 0);
     }
 
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write('<html><head><title>Print Certificates</title>');
-    printWindow.document.write('<style>@media print { @page { size: landscape; } body { margin: 0; } img { max-width: 100%; height: auto; page-break-after: always; } }</style>');
-    printWindow.document.write('</head><body>');
+    tempCtx.fillText(name, x, textY || tempCanvas.height / 2);
 
-    selectedNames.forEach((name, index) => {
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        const tempCtx = tempCanvas.getContext('2d');
+    const imgData = tempCanvas.toDataURL('image/png');
+    printWindow.document.write(`<img src="${imgData}" style="width: 100%; page-break-after: always;">`);
+  });
 
-        tempCtx.drawImage(uploadedImage, 0, 0, tempCanvas.width, tempCanvas.height);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
 
-        tempCtx.font = `${fontSize}px ${customFont || "Arial"}`;
-        tempCtx.fillStyle = customColor;
-        const currentTextAlign = textAlign || 'left';
-        tempCtx.textAlign = currentTextAlign;
-
-        let x = textX || tempCanvas.width / 2;
-        if (currentTextAlign === 'center') {
-            x = tempCanvas.width / 2;
-        } else if (currentTextAlign === 'right') {
-            x = tempCanvas.width - (textX || 0);
-        }
-
-        tempCtx.fillText(name, x, textY || tempCanvas.height / 2);
-
-        const imgData = tempCanvas.toDataURL('image/png');
-        printWindow.document.write(`<img src="${imgData}" style="width: 100%; page-break-after: always;">`);
-    });
-
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-
-    printWindow.onload = function() {
-        printWindow.focus();
-        setTimeout(() => {
-            printWindow.print();
-            printWindow.onafterprint = function() {
-                printWindow.close();
-            };
-        }, 250);
-    };
+  printWindow.onload = function () {
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.onafterprint = function () {
+        printWindow.close();
+      };
+    }, 250);
+  };
 }
 
 // Event listeners
-document.addEventListener('DOMContentLoaded', function() {
-    const exportPDFButton = document.getElementById('exportPDF');
-    const printButton = document.getElementById('printButton');
+document.addEventListener('DOMContentLoaded', function () {
+  const exportPDFButton = document.getElementById('exportPDF');
+  const printButton = document.getElementById('printButton');
 
-    if (exportPDFButton) {
-        exportPDFButton.addEventListener('click', exportAsPDF);
-    } else {
-        console.error('Export PDF button not found in the DOM');
-    }
+  if (exportPDFButton) {
+    exportPDFButton.addEventListener('click', exportAsPDF);
+  } else {
+    console.error('Export PDF button not found in the DOM');
+  }
 
-    if (printButton) {
-        printButton.addEventListener('click', printCertificates);
-    } else {
-        console.error('Print button not found in the DOM');
-    }
+  if (printButton) {
+    printButton.addEventListener('click', printCertificates);
+  } else {
+    console.error('Print button not found in the DOM');
+  }
 });
 
+document.getElementById("selectImageButton").addEventListener("click", function () {
+  document.getElementById("imageUpload").click();
+});

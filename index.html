@@ -1,206 +1,142 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/franken-wc@0.0.4/dist/css/neutral.min.css"
-    />
-    <link rel="icon" type="image/x-icon" href="assest/favicon.ico" />
-    <meta name="theme-color" content="#0d0d0d" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Certedit</title>
-  </head>
-  <body>
-    <div class="uk-position-fixed uk-width-1-1" style="z-index: 999">
-      <nav class="uk-navbar-container">
-        <div class="uk-container">
-          <div uk-navbar>
-            <div class="uk-navbar-left">
-              <a
-                class="uk-navbar-item uk-logo"
-                href="#"
-                id="reset"
-                aria-label="Back to Home"
-                ><img src="assest/ertedit.svg" alt="" class="nav_logo"
-              /></a>
 
-              <ul class="uk-navbar-nav">
-                <li>
-                  <a
-                    href="https://github.com/theajmalrazaq/certedit"
-                    class="uk-flex uk-flex-middle"
-                    target="_blank"
-                  >
-                    <span
-                      class="uk-icon uk-margin-small-right"
-                      uk-icon="icon: star"
-                    ></span>
-                    <span style="margin-top: 5px"> Star on Github</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
-    <div id="home" class="uk-height-1-1">
-      <div
-        class="uk-container uk-height-1-1 uk-flex uk-flex-around uk-flex-middle uk-flex-wrap-reverse"
-      >
-        <div
-          class="uk-flex uk-flex-column uk-height-large uk-flex-between uk-flex-middle"
-        >
-          <div>
-            <img src="assest/ertedit.svg" alt="" class="logo" />
-            <h1 class="uk-margin-small-top">
-              Generate Certificate with different names at once
-            </h1>
-            <p>
-              Designed with 💖 By
-              <a class="uk-link" href="https://github.com/theajmalrazaq"
-                >AjmaL Razaq Bhatti</a
-              >
-            </p>
-          </div>
-          <button
-            class="uk-button uk-button-default btn uk-text-bold uk-text-large"
-            id="generate"
-          >
-            Generate
-          </button>
-        </div>
-      </div>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/franken-wc@0.0.4/dist/css/neutral.min.css" />
+  <link rel="icon" type="image/x-icon" href="assest/favicon.ico" />
+  <meta name="theme-color" content="#0d0d0d" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Certedit</title>
+</head>
 
-    <div
-      id="st-1"
-      class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1"
-      style="display: none"
-    >
-      <div class="uk-section">
-        <div class="uk-container uk-container-xsmall">
-          <div class="uk-card uk-card-default">
-            <div class="uk-card-header">
-              <h3 class="uk-card-title">Step 1</h3>
-              <p
-                class="uk-margin-small-top uk-text-small text-muted-foreground"
-              >
-                Upload Certificate on which you want to add names
-              </p>
-            </div>
+<body>
+  <div class="uk-position-fixed uk-width-1-1" style="z-index: 999">
+    <nav class="uk-navbar-container">
+      <div class="uk-container">
+        <div uk-navbar>
+          <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="#" id="reset" aria-label="Back to Home"><img
+                src="assest/ertedit.svg" alt="" class="nav_logo" /></a>
 
-            <div
-              class="js-upload uk-form-custom uk-padding-small"
-              uk-form-custom=""
-              style="width: fit-content"
-            >
-              <input type="file" accept="image/*" id="imageUpload" />
-              <button
-                class="uk-button uk-button-default"
-                type="button"
-                tabindex="-1"
-              >
-                Select Certificate Image
-              </button>
-            </div>
-
-            <div class="uk-card-footer uk-flex uk-flex-between">
-              <button class="uk-button uk-button-default" id="bck1">
-                Back
-              </button>
-              <button class="uk-button uk-button-default" id="confirmArea">
-                Confirm
-              </button>
-            </div>
+            <ul class="uk-navbar-nav">
+              <li>
+                <a href="https://github.com/theajmalrazaq/certedit" class="uk-flex uk-flex-middle" target="_blank">
+                  <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                  <span style="margin-top: 5px"> Star on Github</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <div
-        class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-remove-padding"
-      >
-        <canvas id="imageCanvas"></canvas>
+    </nav>
+  </div>
+  <div id="home" class="uk-height-1-1">
+    <div class="uk-container uk-height-1-1 uk-flex uk-flex-around uk-flex-middle uk-flex-wrap-reverse">
+      <div class="uk-flex uk-flex-column uk-height-large uk-flex-between uk-flex-middle">
+        <div>
+          <img src="assest/ertedit.svg" alt="" class="logo" />
+          <h1 class="uk-margin-small-top">
+            Generate Certificate with different names at once
+          </h1>
+          <p>
+            Designed with 💖 By
+            <a class="uk-link" href="https://github.com/theajmalrazaq">AjmaL Razaq Bhatti</a>
+          </p>
+        </div>
+        <button class="uk-button uk-button-default btn uk-text-bold uk-text-large" id="generate">
+          Generate
+        </button>
       </div>
     </div>
-    <div
-      id="st-2"
-      class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1"
-      style="display: none"
-    >
-      <div class="uk-section">
+  </div>
+
+  <div id="st-1" class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1" style="display: none">
+    <div class="uk-section">
+      <div class="uk-container uk-container-xsmall">
         <div class="uk-card uk-card-default">
           <div class="uk-card-header">
-            <h3 class="uk-card-title">Step 2</h3>
+            <h3 class="uk-card-title">Step 1</h3>
             <p class="uk-margin-small-top uk-text-small text-muted-foreground">
-              Select Name list txt/csv for which you want to generate
-              certificates
+              Upload Certificate on which you want to add names
             </p>
           </div>
-          <div
-            class="input_wrapper uk-flex uk-flex-column uk-padding-small uk-flex-between"
-          >
-            <div
-              class="js-upload uk-form-custom"
-              uk-form-custom=""
-              style="width: fit-content"
-            >
-              <input type="file" accept=".csv,.txt" id="csvUpload" />
-              <button
-                class="uk-button uk-button-default"
-                type="button"
-                tabindex="-1"
-              >
-                Select Name List
+
+          <div class="js-upload uk-form-custom uk-padding-small" uk-form-custom="" style="width: fit-content">
+            <label for="imageUpload" style="cursor: pointer;">
+              <input type="file" accept="image/*" id="imageUpload" style="display: none;" />
+              <button class="uk-button uk-button-default" type="button" tabindex="-1" id="selectImageButton"
+                style="cursor: pointer;">
+                Select Certificate Image
               </button>
-            </div>
-            <div
-              class="js-upload uk-form-custom uk-margin-small-top"
-              uk-form-custom=""
-              style="width: fit-content"
-            >
-              <input type="file" accept=".ttf,.otf" id="fontUpload" />
-              <button
-                class="uk-button uk-button-default"
-                type="button"
-                tabindex="-1"
-              >
-                Select Custom Font
-              </button>
-            </div>
-          </div>
-          <div
-            class="js-upload uk-form-custom uk-padding-small"
-            uk-form-custom=""
-          >
-            <input type="color" id="colorPicker" style="display: none" />
-            <input
-              type="range"
-              id="fontSize"
-              min="10"
-              max="100"
-              value="20"
-              style="display: none"
-              class="uk-margin"
-            />
+            </label>
+
+
+
           </div>
 
           <div class="uk-card-footer uk-flex uk-flex-between">
-            <button class="uk-button uk-button-default" id="bck2">Back</button>
-            <button class="uk-button uk-button-default" id="saveImages">Download</button>
-            <button class="uk-button uk-button-default" id="exportPDF">Export as PDF</button>
-            <button class="uk-button uk-button-secondary" id="printButton">Print</button>
+            <button class="uk-button uk-button-default" id="bck1">
+              Back
+            </button>
+            <button class="uk-button uk-button-default" id="confirmArea">
+              Confirm
+            </button>
           </div>
         </div>
       </div>
-      <div class="uk-container uk-container-xsmall uk-flex uk-flex-center">
-        <canvas id="previewCanvas"></canvas>
+    </div>
+    <div class="uk-container uk-container-xsmall uk-flex uk-flex-center uk-remove-padding">
+      <canvas id="imageCanvas"></canvas>
+    </div>
+  </div>
+  <div id="st-2" class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1" style="display: none">
+    <div class="uk-section">
+      <div class="uk-card uk-card-default">
+        <div class="uk-card-header">
+          <h3 class="uk-card-title">Step 2</h3>
+          <p class="uk-margin-small-top uk-text-small text-muted-foreground">
+            Select Name list txt/csv for which you want to generate
+            certificates
+          </p>
+        </div>
+        <div class="input_wrapper uk-flex uk-flex-column uk-padding-small uk-flex-between">
+          <div class="js-upload uk-form-custom" uk-form-custom="" style="width: fit-content">
+            <input type="file" accept=".csv,.txt" id="csvUpload" />
+            <button class="uk-button uk-button-default" type="button" tabindex="-1">
+              Select Name List
+            </button>
+          </div>
+          <div class="js-upload uk-form-custom uk-margin-small-top" uk-form-custom="" style="width: fit-content">
+            <input type="file" accept=".ttf,.otf" id="fontUpload" />
+            <button class="uk-button uk-button-default" type="button" tabindex="-1">
+              Select Custom Font
+            </button>
+          </div>
+        </div>
+        <div class="js-upload uk-form-custom uk-padding-small" uk-form-custom="">
+          <input type="color" id="colorPicker" style="display: none" />
+          <input type="range" id="fontSize" min="10" max="100" value="20" style="display: none" class="uk-margin" />
+        </div>
+
+        <div class="uk-card-footer uk-flex uk-flex-between">
+          <button class="uk-button uk-button-default" id="bck2">Back</button>
+          <button class="uk-button uk-button-default" id="saveImages">Download</button>
+          <button class="uk-button uk-button-default" id="exportPDF">Export as PDF</button>
+          <button class="uk-button uk-button-secondary" id="printButton">Print</button>
+        </div>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit-icons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="script.js"></script>
-  </body>
+    <div class="uk-container uk-container-xsmall uk-flex uk-flex-center">
+      <canvas id="previewCanvas"></canvas>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit-icons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>
