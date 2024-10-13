@@ -30,7 +30,7 @@ document.getElementById("reset").addEventListener("click", () => {
   document.getElementById("st-1").style.display = "none";
   document.getElementById("st-2").style.display = "none";
 });
-
+let currentTheme='dark';
 let uploadedImage;
 let selectedNames = ["Demo Name"];
 let canvas, ctx, previewCanvas, previewCtx;
@@ -359,3 +359,45 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById("selectImageButton").addEventListener("click", function () {
   document.getElementById("imageUpload").click();
 });
+document.addEventListener('DOMContentLoaded', function () {
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Check local storage for the saved theme, default to 'dark' if not set // Default to 'dark' theme
+  let e = document.getElementById('favicon');
+  let e2 = document.getElementById('favicon2');
+  let e3= document.getElementById('git');
+  let e4= document.getElementById('mode');
+  // Apply the current theme
+  applyTheme(currentTheme);
+
+  // Function to apply the theme based on the given theme
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.body.style.backgroundColor = 'black'; // Set dark background
+      document.body.style.color = 'white';
+      // Adjust favicon or any other elements if needed
+      e.classList.remove('invert-svg'); 
+      e2.classList.remove('invert-svg'); 
+      e3.style.color='hsl(var(--foreground) / .6)'
+      e4.src='./assest/brightness (1).png'
+      themeToggle.style.backgroundColor='#1c1c1e'
+    } else {
+      document.body.style.backgroundColor = 'white'; // Set light background
+      document.body.style.color = 'black'; // Set text color for light theme
+      e.classList.add('invert-svg'); 
+      e2.classList.add('invert-svg'); 
+      e3.style.color='white'
+      e4.src='./assest/night-mode.png'
+      themeToggle.style.backgroundColor='white'
+    }
+  }
+
+  // Add click event to the toggle button
+  themeToggle.addEventListener('click', () => {
+
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark'; // Toggle theme
+    applyTheme(currentTheme); // Apply the new theme
+  });
+});
+
+

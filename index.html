@@ -18,14 +18,17 @@
         <div uk-navbar>
           <div class="uk-navbar-left">
             <a class="uk-navbar-item uk-logo" href="#" id="reset" aria-label="Back to Home"><img
-                src="assest/ertedit.svg" alt="" class="nav_logo" /></a>
+                src="assest/ertedit.svg" alt="" class="nav_logo" id="favicon"/></a>
 
             <ul class="uk-navbar-nav">
               <li>
                 <a href="https://github.com/theajmalrazaq/certedit" class="uk-flex uk-flex-middle" target="_blank">
                   <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-                  <span style="margin-top: 5px"> Star on Github</span>
+                  <span style="margin-top: 5px" id="git"> Star on Github</span>
                 </a>
+              </li>
+              <li class="place">
+                <button id="themeToggle" class="uk-button uk-button-default "><img src="./assest/brightness (1).png" id="mode" alt="" class="bright"></button>
               </li>
             </ul>
           </div>
@@ -36,8 +39,8 @@
   <div id="home" class="uk-height-1-1">
     <div class="uk-container uk-height-1-1 uk-flex uk-flex-around uk-flex-middle uk-flex-wrap-reverse">
       <div class="uk-flex uk-flex-column uk-height-large uk-flex-between uk-flex-middle">
-        <div>
-          <img src="assest/ertedit.svg" alt="" class="logo" />
+        <div >
+          <img src="assest/ertedit.svg" alt="" class="logo" id="favicon2" />
           <h1 class="uk-margin-small-top">
             Generate Certificate with different names at once
           </h1>
@@ -59,7 +62,7 @@
         <div class="uk-card uk-card-default">
           <div class="uk-card-header">
             <h3 class="uk-card-title">Step 1</h3>
-            <p class="uk-margin-small-top uk-text-small text-muted-foreground">
+            <p class="uk-margin-small-top uk-text-small text-muted-foreground" id="Upload">
               Upload Certificate on which you want to add names
             </p>
           </div>
