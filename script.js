@@ -30,7 +30,7 @@ document.getElementById("reset").addEventListener("click", () => {
   document.getElementById("st-1").style.display = "none";
   document.getElementById("st-2").style.display = "none";
 });
-let currentTheme='dark';
+let currentTheme = "dark";
 let uploadedImage;
 let selectedNames = ["Demo Name"];
 let canvas, ctx, previewCanvas, previewCtx;
@@ -42,7 +42,7 @@ let fontSize = 30;
 let isDragging = false;
 let textX, textY;
 let rectX, rectY;
-let textAlign = 'left'; // Default text alignment
+let textAlign = "left"; // Default text alignment
 function handleImageUpload(event) {
   const file = event.target.files[0];
   const reader = new FileReader();
@@ -239,21 +239,21 @@ function saveImages() {
   });
 }
 function exportAsPDF() {
-  if (typeof jspdf === 'undefined') {
-    console.error('jsPDF library not loaded');
+  if (typeof jspdf === "undefined") {
+    console.error("jsPDF library not loaded");
     return;
   }
 
   if (selectedNames.length === 0) {
     UIkit.notification({
-      message: 'Please upload a name list first',
-      status: 'danger'
+      message: "Please upload a name list first",
+      status: "danger",
     });
     return;
   }
 
   const { jsPDF } = jspdf;
-  const pdf = new jsPDF('l', 'px', [canvas.width, canvas.height]);
+  const pdf = new jsPDF("l", "px", [canvas.width, canvas.height]);
 
   selectedNames.forEach((name, index) => {
     if (index > 0) pdf.addPage();
@@ -266,65 +266,69 @@ function exportAsPDF() {
     ctx.textAlign = textAlign;
 
     let x = textX;
-    if (textAlign === 'center') {
+    if (textAlign === "center") {
       x = canvas.width / 2;
-    } else if (textAlign === 'right') {
+    } else if (textAlign === "right") {
       x = canvas.width - textX;
     }
 
     ctx.fillText(name, x, textY);
 
-    const imgData = canvas.toDataURL('image/png');
-    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+    const imgData = canvas.toDataURL("image/png");
+    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
   });
 
-  pdf.save('certificates.pdf');
+  pdf.save("certificates.pdf");
 }
 
 function printCertificates() {
-  console.log('printCertificates function called');
+  console.log("printCertificates function called");
 
   if (selectedNames.length === 0) {
-    console.log('No names selected');
+    console.log("No names selected");
     UIkit.notification({
-      message: 'Please upload a name list first',
-      status: 'danger'
+      message: "Please upload a name list first",
+      status: "danger",
     });
     return;
   }
 
-  const printWindow = window.open('', '_blank');
-  printWindow.document.write('<html><head><title>Print Certificates</title>');
-  printWindow.document.write('<style>@media print { @page { size: landscape; } body { margin: 0; } img { max-width: 100%; height: auto; page-break-after: always; } }</style>');
-  printWindow.document.write('</head><body>');
+  const printWindow = window.open("", "_blank");
+  printWindow.document.write("<html><head><title>Print Certificates</title>");
+  printWindow.document.write(
+    "<style>@media print { @page { size: landscape; } body { margin: 0; } img { max-width: 100%; height: auto; page-break-after: always; } }</style>"
+  );
+  printWindow.document.write("</head><body>");
 
   selectedNames.forEach((name, index) => {
-    const tempCanvas = document.createElement('canvas');
+    const tempCanvas = document.createElement("canvas");
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
-    const tempCtx = tempCanvas.getContext('2d');
+    const tempCtx = tempCanvas.getContext("2d");
 
     tempCtx.drawImage(uploadedImage, 0, 0, tempCanvas.width, tempCanvas.height);
 
     tempCtx.font = `${fontSize}px ${customFont || "Arial"}`;
     tempCtx.fillStyle = customColor;
-    const currentTextAlign = textAlign || 'left';
+    const currentTextAlign = textAlign || "left";
     tempCtx.textAlign = currentTextAlign;
 
     let x = textX || tempCanvas.width / 2;
-    if (currentTextAlign === 'center') {
+    if (currentTextAlign === "center") {
       x = tempCanvas.width / 2;
-    } else if (currentTextAlign === 'right') {
+    } else if (currentTextAlign === "right") {
       x = tempCanvas.width - (textX || 0);
     }
 
     tempCtx.fillText(name, x, textY || tempCanvas.height / 2);
 
-    const imgData = tempCanvas.toDataURL('image/png');
-    printWindow.document.write(`<img src="${imgData}" style="width: 100%; page-break-after: always;">`);
+    const imgData = tempCanvas.toDataURL("image/png");
+    printWindow.document.write(
+      `<img src="${imgData}" style="width: 100%; page-break-after: always;">`
+    );
   });
 
-  printWindow.document.write('</body></html>');
+  printWindow.document.write("</body></html>");
   printWindow.document.close();
 
   printWindow.onload = function () {
@@ -339,65 +343,104 @@ function printCertificates() {
 }
 
 // Event listeners
-document.addEventListener('DOMContentLoaded', function () {
-  const exportPDFButton = document.getElementById('exportPDF');
-  const printButton = document.getElementById('printButton');
+document.addEventListener("DOMContentLoaded", function () {
+  const exportPDFButton = document.getElementById("exportPDF");
+  const printButton = document.getElementById("printButton");
 
   if (exportPDFButton) {
-    exportPDFButton.addEventListener('click', exportAsPDF);
+    exportPDFButton.addEventListener("click", exportAsPDF);
   } else {
-    console.error('Export PDF button not found in the DOM');
+    console.error("Export PDF button not found in the DOM");
   }
 
   if (printButton) {
-    printButton.addEventListener('click', printCertificates);
+    printButton.addEventListener("click", printCertificates);
   } else {
-    console.error('Print button not found in the DOM');
+    console.error("Print button not found in the DOM");
   }
 });
 
-document.getElementById("selectImageButton").addEventListener("click", function () {
-  document.getElementById("imageUpload").click();
-});
-document.addEventListener('DOMContentLoaded', function () {
-  const themeToggle = document.getElementById('themeToggle');
+document
+  .getElementById("selectImageButton")
+  .addEventListener("click", function () {
+    document.getElementById("imageUpload").click();
+  });
+document.addEventListener("DOMContentLoaded", function () {
+  const themeToggle = document.getElementById("themeToggle");
 
   // Check local storage for the saved theme, default to 'dark' if not set // Default to 'dark' theme
-  let e = document.getElementById('favicon');
-  let e2 = document.getElementById('favicon2');
-  let e3= document.getElementById('git');
-  let e4= document.getElementById('mode');
+  let e = document.getElementById("favicon");
+  let e2 = document.getElementById("favicon2");
+  let e3 = document.getElementById("git");
+  let e4 = document.getElementById("mode");
+  let nav = document.getElementById("navcolor");
+  let star = document.getElementById("starlogo");
+  let box = document.getElementsByClassName("box1");
+  let child = document.getElementsByClassName("box2");
+  let lettter = document.getElementsByClassName("letter");
+  let up=document.getElementsByClassName("up")
   // Apply the current theme
   applyTheme(currentTheme);
 
   // Function to apply the theme based on the given theme
   function applyTheme(theme) {
-    if (theme === 'dark') {
-      document.body.style.backgroundColor = 'black'; // Set dark background
-      document.body.style.color = 'white';
+    if (theme === "dark") {
+      document.body.style.backgroundColor = "black"; // Set dark background
+      document.body.style.color = "white";
       // Adjust favicon or any other elements if needed
-      e.classList.remove('invert-svg'); 
-      e2.classList.remove('invert-svg'); 
-      e3.style.color='hsl(var(--foreground) / .6)'
-      e4.src='./assest/brightness (1).png'
-      themeToggle.style.backgroundColor='#1c1c1e'
+      e.classList.remove("invert-svg");
+      e2.classList.remove("invert-svg");
+      e3.style.color = "hsl(var(--foreground) / .6)";
+      e4.src = "./assest/brightness (1).png";
+      star.style.color = "hsl(var(--foreground) / .6)";
+      themeToggle.style.backgroundColor = "#1c1c1e";
+      nav.style.backgroundColor = "black";
+     
+      for (let i = 0; i < box.length; i++) {
+        box[i].style.backgroundColor = "#1e1e1e"; // Set background color for light theme
+      }
+      for (let i = 0; i < child.length; i++) {
+        child[i].style.backgroundColor = "#292b2c"; // Set background color for light theme
+      }
+      for (let j = 0; j < lettter.length; j++) {
+        lettter[j].style.color = "white";
+        lettter[j].style.backgroundColor = "#1c1c1e";
+      }
+      for(let i=0;i<up.length;i++){
+        up[i].style.color='#bfbfbf'
+      }
+  
     } else {
-      document.body.style.backgroundColor = 'white'; // Set light background
-      document.body.style.color = 'black'; // Set text color for light theme
-      e.classList.add('invert-svg'); 
-      e2.classList.add('invert-svg'); 
-      e3.style.color='white'
-      e4.src='./assest/night-mode.png'
-      themeToggle.style.backgroundColor='white'
+      document.body.style.backgroundColor = "white"; // Set light background
+      document.body.style.color = "black"; // Set text color for light theme
+      e.classList.add("invert-svg");
+      e2.classList.add("invert-svg");
+      e3.style.color = "black";
+      e4.src = "./assest/night-mode.png";
+      star.style.color = "black";
+      themeToggle.style.backgroundColor = "white";
+      nav.style.backgroundColor = "white";
+  
+      for (let i = 0; i < box.length; i++) {
+        box[i].style.backgroundColor = "#e6e6e6"; // Set background color for light theme
+      }
+      for (let i = 0; i < child.length; i++) {
+        child[i].style.backgroundColor = "white"; // Set background color for light theme
+      }
+      for (let j = 0; j < lettter.length; j++) {
+        lettter[j].style.color = "black";
+        lettter[j].style.backgroundColor = "white";
+      }
+      for(let i=0;i<up.length;i++){
+        up[i].style.color='black'
+      }
+     
     }
   }
 
   // Add click event to the toggle button
-  themeToggle.addEventListener('click', () => {
-
-    currentTheme = currentTheme === 'dark' ? 'light' : 'dark'; // Toggle theme
+  themeToggle.addEventListener("click", () => {
+    currentTheme = currentTheme === "dark" ? "light" : "dark"; // Toggle theme
     applyTheme(currentTheme); // Apply the new theme
   });
 });
-
-

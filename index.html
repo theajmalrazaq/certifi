@@ -12,8 +12,8 @@
 </head>
 
 <body>
-  <div class="uk-position-fixed uk-width-1-1" style="z-index: 999">
-    <nav class="uk-navbar-container">
+  <div class="uk-position-fixed uk-width-1-1"  style="z-index: 999">
+    <nav class="uk-navbar-container" id="navcolor">
       <div class="uk-container">
         <div uk-navbar>
           <div class="uk-navbar-left">
@@ -23,7 +23,7 @@
             <ul class="uk-navbar-nav">
               <li>
                 <a href="https://github.com/theajmalrazaq/certedit" class="uk-flex uk-flex-middle" target="_blank">
-                  <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                  <span class="uk-icon uk-margin-small-right" uk-icon="icon: star" id="starlogo"></span>
                   <span style="margin-top: 5px" id="git"> Star on Github</span>
                 </a>
               </li>
@@ -59,10 +59,10 @@
   <div id="st-1" class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1" style="display: none">
     <div class="uk-section">
       <div class="uk-container uk-container-xsmall">
-        <div class="uk-card uk-card-default">
-          <div class="uk-card-header">
+        <div  class="uk-card uk-card-default box1" >
+          <div class="uk-card-header box2" >
             <h3 class="uk-card-title">Step 1</h3>
-            <p class="uk-margin-small-top uk-text-small text-muted-foreground" id="Upload">
+            <p class="uk-margin-small-top uk-text-small text-muted-foreground up" id="Upload">
               Upload Certificate on which you want to add names
             </p>
           </div>
@@ -70,7 +70,7 @@
           <div class="js-upload uk-form-custom uk-padding-small" uk-form-custom="" style="width: fit-content">
             <label for="imageUpload" style="cursor: pointer;">
               <input type="file" accept="image/*" id="imageUpload" style="display: none;" />
-              <button class="uk-button uk-button-default" type="button" tabindex="-1" id="selectImageButton"
+              <button class="uk-button uk-button-default letter" type="button" tabindex="-1" id="selectImageButton"
                 style="cursor: pointer;">
                 Select Certificate Image
               </button>
@@ -80,11 +80,11 @@
 
           </div>
 
-          <div class="uk-card-footer uk-flex uk-flex-between">
-            <button class="uk-button uk-button-default" id="bck1">
+          <div class="uk-card-footer uk-flex uk-flex-between box2">
+            <button class="uk-button uk-button-default letter" id="bck1">
               Back
             </button>
-            <button class="uk-button uk-button-default" id="confirmArea">
+            <button class="uk-button uk-button-default letter" id="confirmArea">
               Confirm
             </button>
           </div>
@@ -97,10 +97,10 @@
   </div>
   <div id="st-2" class="uk-flex-center uk-flex-middle uk-padding uk-flex-wrap uk-height-1-1" style="display: none">
     <div class="uk-section">
-      <div class="uk-card uk-card-default">
-        <div class="uk-card-header">
+      <div class="uk-card uk-card-default box1">
+        <div class="uk-card-header box2">
           <h3 class="uk-card-title">Step 2</h3>
-          <p class="uk-margin-small-top uk-text-small text-muted-foreground">
+          <p class="uk-margin-small-top uk-text-small text-muted-foreground up">
             Select Name list txt/csv for which you want to generate
             certificates
           </p>
@@ -108,13 +108,13 @@
         <div class="input_wrapper uk-flex uk-flex-column uk-padding-small uk-flex-between">
           <div class="js-upload uk-form-custom" uk-form-custom="" style="width: fit-content">
             <input type="file" accept=".csv,.txt" id="csvUpload" />
-            <button class="uk-button uk-button-default" type="button" tabindex="-1">
+            <button class="uk-button uk-button-default letter" type="button" tabindex="-1">
               Select Name List
             </button>
           </div>
           <div class="js-upload uk-form-custom uk-margin-small-top" uk-form-custom="" style="width: fit-content">
             <input type="file" accept=".ttf,.otf" id="fontUpload" />
-            <button class="uk-button uk-button-default" type="button" tabindex="-1">
+            <button class="uk-button uk-button-default letter" type="button" tabindex="-1">
               Select Custom Font
             </button>
           </div>
@@ -124,11 +124,11 @@
           <input type="range" id="fontSize" min="10" max="100" value="20" style="display: none" class="uk-margin" />
         </div>
 
-        <div class="uk-card-footer uk-flex uk-flex-between">
-          <button class="uk-button uk-button-default" id="bck2">Back</button>
-          <button class="uk-button uk-button-default" id="saveImages">Download</button>
-          <button class="uk-button uk-button-default" id="exportPDF">Export as PDF</button>
-          <button class="uk-button uk-button-secondary" id="printButton">Print</button>
+        <div class="uk-card-footer uk-flex uk-flex-between box2">
+          <button class="uk-button uk-button-default letter" id="bck2">Back</button>
+          <button class="uk-button uk-button-default letter" id="saveImages">Download</button>
+          <button class="uk-button uk-button-default letter" id="exportPDF">Export as PDF</button>
+          <button class="uk-button uk-button-secondary " id="printButton">Print</button>
         </div>
       </div>
     </div>
