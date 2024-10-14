@@ -223,3 +223,16 @@ canvas {
   top: 9px;
   left: 844px;
 }
+
+#dropArea {
+  border: 2px dashed #4a4a4a;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+#dropArea:hover {
+  background-color: gray;
+}
