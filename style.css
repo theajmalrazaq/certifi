@@ -40,7 +40,7 @@ body {
 
 .nav_logo:hover {
   transform: scale(1.1);
-  filter: drop-shadow(0 4px 4px rgba(255, 255, 255, 0.2));
+  filter: drop-shadow(0 4px 4px black);
 }
 
 h1 {
@@ -211,4 +211,15 @@ canvas {
   .logo {
     width: 100%;
   }
+}
+.invert-svg {
+  filter: invert(1);
+}
+.bright{
+  width: 30px;
+}
+.place {
+  position: relative;
+  top: 9px;
+  left: 844px;
 }
