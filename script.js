@@ -1,6 +1,6 @@
 document
-  .getElementById("imageUpload")
-  .addEventListener("change", handleImageUpload);
+  .getElementById("iamgeupload1")
+  .addEventListener("change", handleiamgeupload1);
 
 document.getElementById("confirmArea").addEventListener("click", confirmArea);
 
@@ -43,7 +43,7 @@ let isDragging = false;
 let textX, textY;
 let rectX, rectY;
 let textAlign = "left"; // Default text alignment
-function handleImageUpload(event) {
+function handleiamgeupload1(event) {
   const file = event.target.files[0];
   const reader = new FileReader();
   reader.onload = function (e) {
@@ -76,7 +76,7 @@ function setUpCanvas() {
 }
 
 function confirmArea() {
-  if (document.getElementById("imageUpload").value == "") {
+  if (document.getElementById("iamgeupload1").value == "") {
     UIkit.notification({
       message: "Upload Certificate First",
       status: "danger",
@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document
   .getElementById("selectImageButton")
   .addEventListener("click", function () {
-    document.getElementById("imageUpload").click();
+    document.getElementById("iamgeupload1").click();
   });
 document.addEventListener("DOMContentLoaded", function () {
   const themeToggle = document.getElementById("themeToggle");
