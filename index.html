@@ -68,7 +68,8 @@
           </div>
 
           <div class="js-upload uk-form-custom uk-padding-small" uk-form-custom="" style="width: fit-content" id="dropArea">
-            <input type="file" accept="image/*" id="imageUpload1" style="display: none;" onchange="displayFileName()" />
+            
+  <input type="file" accept="image/*" id="imageUpload1" style="display: none;" onchange="displayFileName()" />
             <p id="dropMessage" style="margin: 0; cursor: pointer;">Drag and drop an image here or click to upload</p>
           </div>
 
@@ -134,7 +135,7 @@
   <script src="script.js"></script>
   <script>
     const dropArea = document.getElementById('dropArea');
-    const imageUpload = document.getElementById('imageUpload');
+    const  = document.getElementById('imageupload1');
     const dropMessage = document.getElementById('dropMessage');
   
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -151,7 +152,7 @@
     });
   
     dropArea.addEventListener('drop', handleDrop, false);
-    dropMessage.addEventListener('click', () => imageUpload.click(), false);
+    dropMessage.addEventListener('click', () => imageupload1.click(), false);
   
     function preventDefaults(e) {
       e.preventDefault();
@@ -180,7 +181,7 @@
         const file = files[0];
         const reader = new FileReader();
         
-        imageUpload.files = files; 
+        imageupload1.files = files; 
         dropMessage.textContent = `Selected file: ${file.name}`;
 
         reader.onload = function(event) {
@@ -211,7 +212,7 @@
     }
 
     function displayFileName() {
-      const file = imageUpload.files[0];
+      const file = imageupload1.files[0];
       if (file) {
         dropMessage.textContent = `Selected file: ${file.name}`;
       }
